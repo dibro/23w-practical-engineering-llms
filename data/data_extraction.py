@@ -33,5 +33,3 @@ print(text_extraction(pdf_path))
 #from google.colab import drive
 #drive.mount('/content/drive')
      
-
-# %%
