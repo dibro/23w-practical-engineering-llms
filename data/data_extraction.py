@@ -1,4 +1,3 @@
-#%%
 import PyPDF2
 import pdfminer.high_level as high
 import pdfminer.layout as layout
