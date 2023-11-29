@@ -17,8 +17,8 @@ from langchain.chat_models import ChatOpenAI
 os.environ["OPENAI_API_KEY"] = getpass.getpass("Your OpenAI API Key:")
 
 
-def split_text(document: List) -> List[langchain.schema.document.Document]:
-    """Two type of split: 
+def split_text(documents: List) -> List[langchain.schema.document.Document]:
+    """ Two types of split: 
     - CharacterTextSplitter: split based on characters passed in, \n
     chunk size is amount of characters
     - RecursiveTextSplitter: split based on semantical units (e.g sentences) \n
@@ -30,11 +30,11 @@ def split_text(document: List) -> List[langchain.schema.document.Document]:
         chunk_overlap=50,
         length_function=len)
     
-    chunks = text_split.transform_documents(document)
+    chunks = text_split.transform_documents(documents)
     print('Splitting done')
     return chunks
 
-def doc_embedding(chunk: List, emb_type) -> langchain.embeddings.cache.CacheBackedEmbeddings:
+def doc_embedding(chunks: List, emb_type) -> langchain.embeddings.cache.CacheBackedEmbeddings:
     """
     Construct an Embedder (get embeddings from chunks) with
     - CacheBackedEmbeddings: local cache
