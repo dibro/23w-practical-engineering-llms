@@ -69,3 +69,4 @@ def vector_store(chunks: List[langchain.schema.document.Document],
     vector_store = FAISS.from_documents(chunks, embedder)
     return vector_store
 
+
