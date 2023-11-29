@@ -1,3 +1,4 @@
+#%%
 import PyPDF2
 import pdfminer.high_level as high
 import pdfminer.layout as layout
@@ -25,10 +26,11 @@ def text_extraction(pdf_path):
     return text
 
 # Try a random pdf
-pdf_path = os.path.join(os.getcwd(), 'data','sample.pdf')
+pdf_path = os.path.join(os.getcwd(),'sample.pdf')
 print(text_extraction(pdf_path))
 
 # Mount content if using Drive
 #from google.colab import drive
 #drive.mount('/content/drive')
      
+

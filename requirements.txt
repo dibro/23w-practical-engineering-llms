@@ -4,4 +4,4 @@ tiktoken
 pyPDF2
 pdfminer.six
 sentence_transformers
-faiss
+faiss-cpu
