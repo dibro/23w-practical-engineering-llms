@@ -10,17 +10,6 @@ headers = {
     "Content-Type": "application/json",
 }
 
-# Set the data to be sent in the request body
-
-
-
-
-# Check the response status code
-# if response.status_code == 200:
-#     print("Request successful")
-# else:
-#     print("Request failed with status code", response.status_code)
-
 def on_input_change():
     user_input = st.session_state.user_input
     st.session_state.past.append(user_input)
@@ -66,7 +55,6 @@ with chat_placeholder.container():
         #     allow_html=True,
         #     is_table=True if st.session_state['generated'][i]['type']=='table' else False
         # )
-    
     st.button("Clear message", on_click=on_btn_click)
 
 with st.container():
