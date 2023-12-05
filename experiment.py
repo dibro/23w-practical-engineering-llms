@@ -43,9 +43,9 @@ def doc_embedding(chunks: List, emb_type) -> langchain.embeddings.cache.CacheBac
     print("Constructing Embedder...")
     store = LocalFileStore("./cache/")
     # Choose embedding type
-    if emb_type = 'openai':
+    if emb_type == 'openai':
         emb_model = OpenAIEmbeddings()
-    if emb_type = 'huggingface':
+    if emb_type == 'huggingface':
         emb_model = HuggingFaceEmbeddings()
     else:
         raise ValueError(f'Unsupported embedding type: {emb_type}')
