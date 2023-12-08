@@ -32,12 +32,29 @@ def predict(message, history):
     answer = get_response_from_llm(history)
     return answer
 
-demo = gr.ChatInterface(predict,
-    chatbot=gr.Chatbot(height=300),
-    textbox=gr.Textbox(placeholder="Ask me anything", container=False, scale=7),
-    title="Talk to llama2",
-    description="Ask me anything",
-    ).launch()
+def knn(query, k, df):
+    return 'test'
+# demo = gr.ChatInterface(predict,
+#     chatbot=gr.Chatbot(height=300),
+#     textbox=gr.Textbox(placeholder="Ask me anything", container=False, scale=7),
+#     title="Talk to llama2",
+#     description="Ask me anything",
+#     ).launch()
+
+with gr.Blocks() as demo:
+    with gr.Tab("Lion"):
+        gr.ChatInterface(predict)
+
+    with gr.Tab("Search Engine"):
+        gr.Interface(
+            knn, 
+            inputs=[
+                gr.Textbox(label='Type your search query', lines=1),
+                gr.Number(label='best K results', value=5),
+                gr.Dataframe(label='dataset')
+            ],
+            outputs=gr.Textbox(label='Results', lines=6)
+        )
 
 if __name__ == "__main__":
     demo.launch(show_api=False)  
