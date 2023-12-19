@@ -2,11 +2,11 @@
 import os, sys
 import re
 import getpass
-#import PyPDF2
 #import pdfminer.high_level as high
 import langchain
+from langchain.document_loaders import WebBaseLoader
 from langchain.schema.document import Document
-from langchain.loaders.pdf_loader import PDFLoader
+#rom langchain.loaders.pdf_loader import PDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import CacheBackedEmbeddings
 from langchain.embeddings import OpenAIEmbeddings, HuggingFaceEmbeddings
@@ -39,8 +39,27 @@ os.environ["OPENAI_API_KEY"] = getpass.getpass("Your OpenAI API Key:")
         print(e)
 
     return text'''
+#%%
+def find_urls(text: str) -> List:
+    """
+    Extract URLs from a given text.
 
+    Patterns starting with 'http://', 'https://', or 'www.'
+    """
+    url_pattern = re.compile(r'https?://\S+|www\.\S+')
+    return url_pattern.findall(text)
 
+def website_loader(website: Union[str, list[str]]) -> List[langchain.schema.document.Document]:
+    """
+    Loads the specified website(s) into Document objects.
+    """
+
+    print("Loading website(s) into Documents...")
+    documents = WebBaseLoader(web_path=website).load()
+    print("Done loading website(s).")
+    return documents
+
+#%%
 def pdf_extraction(pdf_filenames):
     '''
     Load pdfs as document objects
