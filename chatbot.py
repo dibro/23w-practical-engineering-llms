@@ -2,7 +2,6 @@
 import os, sys
 import re
 import getpass
-#import PyPDF2
 #import pdfminer.high_level as high
 import langchain
 from langchain.document_loaders import WebBaseLoader
