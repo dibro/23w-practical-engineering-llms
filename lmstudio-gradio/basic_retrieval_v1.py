@@ -60,12 +60,16 @@ try:
     with open(config['urls'], 'r') as f:
         urls = f.read().splitlines()
 
-    # WebBaseLoader for each URL
+    # Initialize an empty list for all webtexts
+    all_webtexts = []
+
+    # Loop through each URL and process the web documents
     for url in urls:
         web_loader = WebBaseLoader(web_path=url)
         web_docs = web_loader.load()
         webtext_splitter = RecursiveCharacterTextSplitter(chunk_size=config['chunk_size'], chunk_overlap=config['chunk_overlap'])
-        webtexts = text_splitter.split_documents(docs)
+        webtexts = webtext_splitter.split_documents(web_docs)
+        all_webtexts.extend(webtexts)  # Append the webtexts to the all_webtexts list
 
 except Exception as e:
     logging.error(f"Document processing failed: {e}")
@@ -84,9 +88,12 @@ except Exception as e:
     logging.error(f"Error occurred during file deletion: {e}")
     raise
 
-# Vector database setup
+# Combine texts from PDFs and webtexts
+combined_texts = texts + all_webtexts
+
+# Vector database setup with combined texts
 try:
-    qdrant = Qdrant.from_documents(documents=texts, embedding=GPT4AllEmbeddings(), path=config['qdrant_path'], collection_name=config['qdrant_collection_name'])
+    qdrant = Qdrant.from_documents(documents=combined_texts, embedding=GPT4AllEmbeddings(), path=config['qdrant_path'], collection_name=config['qdrant_collection_name'])
     retriever = qdrant.as_retriever(search_type='similarity', search_kwargs={'k': config['k_retrieval']})
 except Exception as e:
     logging.error(f"Qdrant initialization failed: {e}")
